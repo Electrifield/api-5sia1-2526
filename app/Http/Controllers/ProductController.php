@@ -9,62 +9,62 @@ use Illuminate\Validation\ValidationException;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * tampilkan semua data produk beserta pemiliknya (user)
+     * Tampilkan semua data Produk.
+     * Beserta pemiliknya (user)
      */
     public function index()
     {
-        //untuk memanggil relasi terkai,sebutkan
-        // nama method relasi yang ada di model tersebut
-        // gunakan method with() untuk menyertakan relasi tabel
-        // pada data yang dipanggil
+        // Untuk memanggil relasi terkait, sebutkan
+        // nama method relasi yang ada di model tersebut.
+        // Gunakan method with() untuk menyertakan relasi tabel
+        // pada data yang dipanggil.
         $products = Product::query()
-        ->where('is_available',true)    // hanya produk yang tersedia
-        ->with('user')                          // sertakan pemilik produk
-        ->get();                                            // eksekusi query
-        // format response ada status (sukses/gagal) dan data
+            ->where('is_available', true)   // hanya produk tersedia
+            ->with('user')                  // sertakan pemiliknya
+            ->get();                        // eksekusi query
+        // format respon ada status (Sukses/Gagal) dan data
         return response()->json([
-            'status' => 'Success',
-            'data' => $products
+            'status' => 'Sukses',
+            'data'   => $products
         ]);
     }
-    
+
     /**
-     * cari produk berdasarkan nama 
+     * Cari produk berdasarkan `name`
      * dan ikutkan relasinya
      */
     public function search(Request $req)
     {
-        // validasi minimal 3 huruf pencarian
         try {
+            // validasi minimal 3 huruf untuk pencarian
             $validated = $req->validate([
                 'teks' => 'required|min:3',
-            ],
-            [
-                // pesan error custom
-                'teks.required' => 'Kata kunci harus diisi',
-                'teks.min' => 'Kata kunci minimal 3 karakter',
             ], [
-                // custom attribute
-                'teks'=> 'huruf',
+                // pesan error custom
+                'teks.required' => ':Attribute jangan dikosongkan lah!',
+                'teks.min'      => 'Ini :attribute kurang dari :min bos!',
+            ], [
+                // custom attributes
+                'teks'  => 'huruf'
             ]);
 
             // proses pencarian produk berdasarkan teks yang dikirim
             $products = Product::query()
-            ->where('name','like','%'.$req->teks.'%')
-            ->with('user')
-            ->get();
+                ->where('name', 'like', '%'.$req->teks.'%')
+                ->with('user')
+                ->get();
             // return hasil pencarian
             return response()->json([
-                'pesan' => 'Suksus!',
-                'data' => $products,
+                'pesan' => 'Sukses!',
+                'data'  => $products,
             ]);
-        } catch (ValidationException $ex) {
+        }
+        // use Illuminate\Validation\ValidationException;
+        catch (ValidationException $ex) {
             return response()->json([
-                'status' => 'Gagal!',
-                'data' => $ex->getMessage(),
+                'pesan' => 'Gagal!',
+                'data'  => $ex->getMessage(),
             ]);
-
         }
     }
 

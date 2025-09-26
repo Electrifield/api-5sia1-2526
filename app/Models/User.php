@@ -3,8 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Iilluminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -48,17 +48,18 @@ class User extends Authenticatable
         ];
     }
 
-    /** 
-     * Relasi one-to-many (inverse) ke tabel products
-     * nama method disesuikan dengan bentuk plural/singular
+    /**
+     * Relasi one-to-many dengan tabel products
+     * nama method disesuaikan dengan bentuk plural/singular
      * dari nama tabel tujuan relasi
-     * use Iilluminate\Database\Eloquent\Relations\HasMany;
+     * use Illuminate\Database\Eloquent\Relations\HasMany;
      */
     public function products(): HasMany
-        {
-            // $this adalah objek dari model ini (users)
-            // hasmany adalah method relasi, selain itu ada:
-            // hasOne(), belongsTo(), belongsToMany()
-            return $this->hasMany(Product::class);
-        }
-}
+    {
+        // $this adalah objek dari model ini (user)
+        // hasMany adalah method relasi, selain itu ada:
+        // hasOne(), belongsTo(), dan belongsToMany()
+        return $this->hasMany(Product::class);
+    }
+
+} // end class

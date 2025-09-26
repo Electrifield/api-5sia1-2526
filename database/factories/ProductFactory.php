@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -19,12 +19,11 @@ class ProductFactory extends Factory
     {
         $users = User::pluck('id')->toArray();
         return [
-            //
-            'user_id' => fake()->randomElement($users),
-            'name' => fake()->company(),
+            'user_id'   => fake()->randomElement($users),
+            'name'      => fake()->company(),
             'is_available' => fake()->boolean(80),
-            'stock' => fake()->numberBetween(10,220),
-            'price' => fake()->numberBetween(2000,200000),
+            'stock'     => fake()->numberBetween(10, 220),
+            'price'     => fake()->numberBetween(2000, 200000),
         ];
     }
 }
