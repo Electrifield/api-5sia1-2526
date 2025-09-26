@@ -21,7 +21,15 @@ use App\Http\Controllers\ProductController;
 Route::get('/products/semuanya', [ProductController::class, 'index']);
 // 2. Cari produk tersedia berdasarkan nama
 Route::get('/products/cari', [ProductController::class, 'search']);
-
+// Tugas Web 3 CRUD By Arif 5SIA1
+// 3. Buat produk baru
+Route::post('/products/buat', [ProductController::class, 'create']);
+// 4. Melihat produk berdasarkan id
+Route::get('/products/item/{id}', [ProductController::class, 'show']);
+// 5. Update produk berdasarkan id
+Route::put('/products/update/{id}', [ProductController::class, 'update']);
+// 6. Hapus produk berdasarkan id
+Route::delete('/products/hapus/{id}', [ProductController::class, 'delete']);
 
 
 
