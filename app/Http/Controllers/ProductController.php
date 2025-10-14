@@ -84,7 +84,15 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'is_available'=> 'boolean',
             'user_id'     => 'nullable|exists:users,id',
-        ]);
+        ], [
+                'user_id.required' => 'Userid harus diisi!',
+                'user_id.exists' => 'Userid tidak ditemukan!',
+                'name.required' => 'Nama product harus diisi!',
+                'price.required' => 'Harga product harus diisi!',
+                'price.numeric' => 'Harga harus berupa angka!',
+                'stock.required' => 'Stok product harus diisi!',
+                'stock.integer' => 'Stok product harus berupa angka bulat!',
+            ]);
 
         $products = Product::create($validated);
         
